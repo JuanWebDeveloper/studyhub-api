@@ -13,3 +13,11 @@ async def create_note(note_to_create: Note):
   insertion_result = await notes_collection.insert_one(encoded_note)
   retrieved_note = await notes_collection.find_one({"_id": insertion_result.inserted_id})
   return retrieved_note
+
+# Retrieves all notes from the database and returns them.
+async def get_all_notes():
+  all_notes = []
+  notes_cursor = notes_collection.find({})
+  async for note_document in notes_cursor:
+    all_notes.append(Note(**note_document))
+  return all_notes
