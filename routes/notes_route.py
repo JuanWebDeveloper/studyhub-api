@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException
 from bson import ObjectId
-from controllers.notes_controller import create_notes, get_all_notes
+from controllers.notes_controller import create_notes, get_all_notes, get_note_by_id
 from schemas.notes_schema import Note
 
 
@@ -24,3 +24,12 @@ async def save_notes(new_note: Note):
 async def fetch_all_notes():
   all_notes = await get_all_notes()
   return all_notes
+
+# Define a GET route '/note/{note_id}' to retrieve a note by its ID from the database.
+@notes_router.get("/note/{note_id}", response_model=Note)
+async def fetch_note_by_id(note_id: str):
+  note = await get_note_by_id(note_id)
+  
+  if note:
+    return note
+  raise HTTPException(status_code=404, detail=f"Note with ID {note_id} not found.")
