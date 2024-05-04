@@ -31,3 +31,12 @@ async def get_note_by_id(note_id: str):
 async def get_note_by_title(note_title: str):
   note = await notes_collection.find_one({'title': note_title})
   return note
+
+# Updates a note in the database and returns the updated note.
+async def update_note(note_id: str, note_data: dict):
+  # Remove any keys with values of None.
+  note_data = {key: value for key, value in note_data.items() if value is not None}
+
+  await notes_collection.update_one({'_id': note_id}, {'$set': note_data})
+  updated_note = await notes_collection.find_one({'_id': note_id})
+  return updated_note
