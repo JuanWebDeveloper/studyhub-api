@@ -21,3 +21,8 @@ async def get_all_notes():
   async for note_document in notes_cursor:
     all_notes.append(Note(**note_document))
   return all_notes
+
+# Retrieves a note by its ID from the database and returns it.
+async def get_note_by_id(note_id: str):
+  note = await notes_collection.find_one({'_id': note_id})	
+  return note
