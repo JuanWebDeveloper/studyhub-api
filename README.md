@@ -18,7 +18,6 @@ StudyHub API follows a structured layout to organize its components effectively:
 - `controllers`: Contains controllers for handling business logic.
 - `middlewares`: Contains middleware functions.
 - `utils`: Contains utility functions.
-- `tests`: Contains test cases for the application.
 
 ## Installation
 
