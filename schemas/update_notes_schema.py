@@ -1,4 +1,5 @@
 from typing import Optional
+from bson import ObjectId
 from pydantic import BaseModel, Field
 
 class UpdateNotes(BaseModel):
@@ -6,3 +7,8 @@ class UpdateNotes(BaseModel):
     content: Optional[str] = Field(None)
     category: Optional[bool] = Field(None)
 	
+    class Config:
+       arbitrary_types_allowed = True
+       json_encoders = {
+         ObjectId: str
+       }
