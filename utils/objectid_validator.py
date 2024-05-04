@@ -1,6 +1,6 @@
 from bson import ObjectId
 
-#*> Custom validator for Pydantic models that validates and converts ObjectId values to strings.
+# Custom validator for Pydantic models that validates and converts ObjectId values to strings.
 class PyObjectIdValidator(ObjectId):
     @classmethod
     def __get_validators__(cls):
