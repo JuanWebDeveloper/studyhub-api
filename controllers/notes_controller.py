@@ -26,3 +26,8 @@ async def get_all_notes():
 async def get_note_by_id(note_id: str):
   note = await notes_collection.find_one({'_id': note_id})	
   return note
+
+# Retrieves a note by its title from the database and returns it.
+async def get_note_by_title(note_title: str):
+  note = await notes_collection.find_one({'title': note_title})
+  return note
