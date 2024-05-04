@@ -1,8 +1,10 @@
 from fastapi import FastAPI
 from pymongo import MongoClient, errors
-from pymongo import errors
+from routes.notes_route import notes_router
 
+# Create a new FastAPI instance.
 api_app = FastAPI();
+# Create a new MongoClient instance to connect to the MongoDB database.
 mc = MongoClient('mongodb://localhost:27017/')
 
 @api_app.get("/connection-status")
@@ -21,3 +23,6 @@ def connection_status():
 	  "db_connection": False,
 	  "db_message": "Connection to the database failed!"
     }
+
+# Incorporate the 'notes_router' into the main FastAPI application to handle note-related routes.
+api_app.include_router(notes_router)
