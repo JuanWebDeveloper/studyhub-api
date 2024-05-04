@@ -40,3 +40,8 @@ async def update_note(note_id: str, note_data: dict):
   await notes_collection.update_one({'_id': note_id}, {'$set': note_data})
   updated_note = await notes_collection.find_one({'_id': note_id})
   return updated_note
+
+# Deletes a note from the database and returns True if the deletion was successful.
+async def delete_note(note_id: str):
+  deletion_result = await notes_collection.delete_one({'_id': note_id})
+  return deletion_result.deleted_count > 0
