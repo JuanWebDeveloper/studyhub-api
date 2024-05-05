@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException
 from bson import ObjectId
-from controllers.notes_controller import create_notes, get_all_notes, get_note_by_id, update_note
+from controllers.notes_controller import create_notes, get_all_notes, get_note_by_id, update_note, delete_note
 from schemas.notes_schema import Note
 from schemas.update_notes_schema import UpdateNote
 
@@ -32,7 +32,7 @@ async def fetch_note_by_id(note_id: str):
   
   if note:
     return note
-  raise HTTPException(status_code=404, detail=f"Note with ID {note_id} not found.")
+  raise HTTPException(status_code=404, detail=f"Note with ID {note_id} not found in the database. Please verify the ID and try again.")
 
 # Define a PUT route '/update-note/{note_id}' to update a note in the database.
 @notes_router.put("/update-note/{note_id}", response_model=Note)
@@ -42,4 +42,13 @@ async def update_note_by_id(note_id: str, updated_note: UpdateNote):
   
   if response:
     return response
-  raise HTTPException(status_code=404, detail=f"Note with ID {note_id} not found.")
+  raise HTTPException(status_code=404, detail=f"Note with ID {note_id} not found in the database. Please verify the ID and try again.")
+
+# Define a DELETE route '/delete-note/{note_id}' to delete a note from the database.
+@notes_router.delete("/delete-note/{note_id}")
+async def remove_note_by_id(note_id: str):
+  deletion_result = await delete_note(note_id)
+  
+  if deletion_result:
+    return {"message": "Note deleted successfully."}
+  raise HTTPException(status_code=404, detail=f"Note with ID {note_id} not found in the database. Please verify the ID and try again.")
