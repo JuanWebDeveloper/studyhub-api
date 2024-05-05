@@ -1,8 +1,8 @@
 from fastapi import APIRouter, HTTPException
 from bson import ObjectId
-from controllers.notes_controller import create_notes, get_all_notes, get_note_by_id
+from controllers.notes_controller import create_notes, get_all_notes, get_note_by_id, update_note
 from schemas.notes_schema import Note
-
+from schemas.update_notes_schema import UpdateNote
 
 # Create a new APIRouter instance to handle note-related routes.
 notes_router = APIRouter()
@@ -32,4 +32,14 @@ async def fetch_note_by_id(note_id: str):
   
   if note:
     return note
+  raise HTTPException(status_code=404, detail=f"Note with ID {note_id} not found.")
+
+# Define a PUT route '/update-note/{note_id}' to update a note in the database.
+@notes_router.put("/update-note/{note_id}", response_model=Note)
+async def update_note_by_id(note_id: str, updated_note: UpdateNote):
+  updated_note_dict = updated_note.model_dump()
+  response = await update_note(note_id, updated_note_dict)
+  
+  if response:
+    return response
   raise HTTPException(status_code=404, detail=f"Note with ID {note_id} not found.")
