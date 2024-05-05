@@ -39,7 +39,7 @@ source venv/bin/activate
 3. Run the application:
 
 ```bash
-uvicorn app.main:app --reload
+uvicorn app.main:api_app --reload
 ```
 
 ## Virtual Environment
@@ -52,17 +52,36 @@ StudyHub comes with a pre-configured virtual environment located in the `venv` d
 source venv/bin/activate
 ```
 
-If the virtual environment is not configured, you can set it up by running the following commands:
+If the virtual environment is not set up, you can set it up by running the following commands:
 
 ```bash
 python -m venv venv
 source venv/bin/activate
 ```
 
-Once the virtual environment is activated, you can install the project's dependencies using the `requirements.txt` file:
+Once the virtual environment is activated, you can install the project dependencies using the `requirements.txt` file:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-Remember to activate the virtual environment before running the application.
+Before running the application, you need to create a `.env` file at the root of the project to store environment variables. This file should contain the following variable:
+
+```properties
+# Frontend server URL in the development environment
+DEV_FRONTEND_URL=your_frontend_host
+```
+
+Replace `your_frontend_host` with the URL of the host you are using for the frontend.
+
+This `.env` file is used to store sensitive information that should not be publicly exposed, such as API keys, passwords, etc. Therefore, this file is included in the `.gitignore` file to prevent it from being accidentally uploaded to public repositories.
+
+Remember to activate the virtual environment and set up the `.env` file before running the application.
+
+Once the `.env` file is set up with the correct frontend host, you can run the application using the following command:
+
+```bash
+uvicorn main:api_app --reload
+```
+
+This command starts the application and enables live reloading, which means the application will automatically update as you make changes to the code.
