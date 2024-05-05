@@ -7,6 +7,7 @@ StudyHub API is the API component of the StudyHub platform, designed to help stu
 1. [Project Structure](#project-structure)
 2. [Installation](#installation)
 3. [Virtual Environment](#virtual-environment)
+4. [Database Configuration](#database-configuration)
 
 ## Project Structure
 
@@ -15,7 +16,7 @@ StudyHub API follows a structured layout to organize its components effectively:
 - `database`: Contains database-related files.
 - `routes`: Contains the API route handlers.
 - `schemas`: Contains data schema definitions.
-- `controllers`: Contains controllers for handling business logic.
+- `controllers`: Contains controllers to manage the operations of the application.
 - `middlewares`: Contains middleware functions.
 - `utils`: Contains utility functions.
 
@@ -23,24 +24,34 @@ StudyHub API follows a structured layout to organize its components effectively:
 
 To run StudyHub API locally, follow these steps:
 
-1. Clone the repository:
+### 1. Clone the repository:
 
 ```bash
 git clone https://github.com/JuanWebDeveloper/studyhub-api.git
 cd StudyHub
 ```
 
-2. Activate the virtual environment:
+### 2. Perform the following pre-execution configurations for the proper functioning of the API
 
-```bash
-source venv/bin/activate
-```
+Before launching the application, it's crucial to verify that the virtual environment is operational and properly configured. Equally important is the setup of the environment variables, which should be stored in a .env file at the root of the project. This file should contain all the necessary variables for the application to function correctly. Lastly, ensure that the database configuration is correctly established. These steps are vital to guarantee the optimal operation and data integrity within the application.
 
-3. Run the application:
+Please follow the subsequent steps to properly configure these components before proceeding with the execution of the application:
 
-```bash
-uvicorn app.main:api_app --reload
-```
+1. Ensure that the virtual environment is active. If you're unsure how to do this, refer to the "Virtual Environment" section of this document.
+
+2. Create the .env file at the root of the project and set up the necessary environment variables. This file should contain at least the following variable:
+
+   ```properties
+   DEV_FRONTEND_URL=your_frontend_host
+   ```
+
+- Replace `your_frontend_host` with the URL of the host you are using for the frontend.
+
+3. Verify that the database configuration is correctly established. If you need help with this, refer to the "Database Configuration" section of this document.
+
+## Did configuration issues arise?
+
+If you encounter problems with the configurations of the virtual environment component and the database component, please refer to the `Virtual Environment` and `Database Configuration` sections of this document.
 
 ## Virtual Environment
 
@@ -65,20 +76,28 @@ Once the virtual environment is activated, you can install the project dependenc
 pip install -r requirements.txt
 ```
 
-Before running the application, you need to create a `.env` file at the root of the project to store environment variables. This file should contain the following variable:
+## Database Configuration
 
-```properties
-# Frontend server URL in the development environment
-DEV_FRONTEND_URL=your_frontend_host
+StudyHub API uses MongoDB as its database. The connection to the database is configured in the `connection.py` file located in the `database` directory.
+
+In this file, you will find the following lines of code:
+
+```python
+mongo_client = AsyncIOMotorClient('your_mongodb_host')
+studyhub_database = mongo_client.your_database_name
 ```
 
-Replace `your_frontend_host` with the URL of the host you are using for the frontend.
+Replace `your_mongodb_host` with the host where your MongoDB is running and `your_database_name` with the name of your MongoDB database.
 
-This `.env` file is used to store sensitive information that should not be publicly exposed, such as API keys, passwords, etc. Therefore, this file is included in the `.gitignore` file to prevent it from being accidentally uploaded to public repositories.
+The application is configured to use a MongoDB collection named `notes` to store the notes. If you want to use a different collection name, you need to go to the `note_controller.py` file located in the `controllers` directory and change the following line:
 
-Remember to activate the virtual environment and set up the `.env` file before running the application.
+```python
+notes_collection = studyhub_database.notes
+```
 
-Once the `.env` file is set up with the correct frontend host, you can run the application using the following command:
+Replace `notes` with the name of your desired collection.
+
+Once the virtual environment is active, the .env file is configured with the correct frontend host, and the MongoDB database is set up, you can run the application using the following command:
 
 ```bash
 uvicorn main:api_app --reload
