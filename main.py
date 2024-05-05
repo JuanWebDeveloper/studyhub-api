@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from pymongo import MongoClient, errors
 from routes.notes_route import notes_router
+from middlewares.cors_middleware import setup_cors
 
 # Create a new FastAPI instance.
 api_app = FastAPI();
@@ -26,3 +27,6 @@ def connection_status():
 
 # Incorporate the 'notes_router' into the main FastAPI application to handle note-related routes.
 api_app.include_router(notes_router)
+
+# Initialize CORS middleware settings.
+setup_cors(api_app)
