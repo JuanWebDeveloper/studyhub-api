@@ -1,2 +1,4 @@
-# Ignore auto generated Python bytecode cache
+# Ignore auto generated Python bytecode cache.
 __pycache__
+# Ignore environment variables file to prevent exposing sensitive data like API keys, passwords, etc.
+.env
