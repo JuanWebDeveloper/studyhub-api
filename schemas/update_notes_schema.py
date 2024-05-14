@@ -2,7 +2,7 @@ from typing import Optional
 from bson import ObjectId
 from pydantic import BaseModel, Field
 
-class UpdateNotes(BaseModel):
+class UpdateNote(BaseModel):
   title: Optional[str] = Field(None)
   content: Optional[str] = Field(None)
   category: Optional[bool] = Field(None)
