@@ -14,15 +14,15 @@ def connection_status():
     # The 'ismaster' command is a lightweight operation used to check server availability.
     mc.admin.command('ismaster')
     return {
-      "api_message": "Connection to the API is successful!",
+      "api_message": "¡Conexión exitosa a la API!",
       "db_connection": True,
-      "db_message": "Connection to the database is successful!"
+      "db_message": "¡Conexión exitosa a la base de datos!"
     }
   except errors.ConnectionFailure:
     return {
-	  "api_message": "Connection to the API is successful!",
+	  "api_message": "¡Conexión exitosa a la API!",
 	  "db_connection": False,
-	  "db_message": "Connection to the database failed!"
+	  "db_message": "¡Error en la conexión a la base de datos!"
     }
 
 # Incorporate the 'notes_router' into the main FastAPI application to handle note-related routes.
